@@ -48,6 +48,10 @@
         public Owner(string? name, int? age, string? gender, string? nationality, bool? isemployee) : base(name, age, gender, nationality, isemployee)
         {
         }
+        public Owner(Employee employee) : base(employee.Name, employee.Age, employee.Gender, employee.Nationality, employee.IsCitizen)
+        {
+
+        }
     }
     class Client : Person
     {
