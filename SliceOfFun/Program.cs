@@ -1,4 +1,5 @@
 ﻿using SliceOfFun;
+using static SliceOfFun.PizzaStore;
 
 class Program
 {
@@ -11,8 +12,8 @@ class Program
             nationality: "Turkish",
             isCitizen: true
             );
-        UncleEtemPizza uncleEtemPizza = new UncleEtemPizza(new Owner(etem));
+        PizzaStore a = PizzaStoreFactory.CreatePizzaStore(PizzaStoreType.SNAPizza, Location.Downtown, new Owner(etem));
         
-        Console.WriteLine( uncleEtemPizza );
+        Console.WriteLine(a.IsFranchiseStore);
     }
 }
