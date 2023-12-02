@@ -1,6 +1,6 @@
 ﻿namespace SliceOfFun
 {
-    abstract class Person
+    public abstract class Person
     {
         public string? Name { get; set; }
         public int? Age { get; set; }
@@ -15,7 +15,7 @@
         }
     }
 
-    class Employee : Person
+    public class Employee : Person
     {
         public Employee(string? name, int? age, string? gender, string? nationality, bool? isCitizen) : base(true)
         {
@@ -27,19 +27,19 @@
         }
     }
 
-    class Stuff : Employee
+    public class Stuff : Employee
     {
         public Stuff(string? name, int? age, string? gender, string? nationality, bool? IsCitizen) : base(name, age, gender, nationality, IsCitizen)
         {
         }
     }
-    class Management : Employee
+    public class Management : Employee
     {
         public Management(string? name, int? age, string? gender, string? nationality, bool? isemployee) : base(name, age, gender, nationality, isemployee)
         {
         }
     }
-    class Owner : Employee
+    public class Owner : Employee
     {
         public Owner(Person person) : base(person.Name,person.Age,person.Gender, person.Nationality,person.IsCitizen)
         {
@@ -53,7 +53,7 @@
 
         }
     }
-    class Client : Person
+    public class Client : Person
     {
         Client() : base(false)
         {
