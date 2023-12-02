@@ -1,31 +1,36 @@
-﻿namespace SliceOfFun
+﻿using System.Runtime.Serialization;
+namespace SliceOfFun
 {
-    abstract class RawMaterial
+    public abstract class RawMaterial
     {
-        protected RawMaterial(string? type)
+        public RawMaterial(Product.RawMaterialType rawMaterialType)
         {
-            Type = type ?? throw new ArgumentNullException(nameof(type));
+            RawMaterialType = rawMaterialType;
         }
 
-        protected string? Type { get; private set; }
+        protected Product.RawMaterialType? RawMaterialType { get; private set; }
         public virtual decimal Quantity { get; set; }
         public virtual string? UOM { get; }
     }
 
-    abstract class Vegetable : RawMaterial
+    partial class Vegetable : RawMaterial
     {
-        protected Vegetable() : base("Vegetable")
+        protected Product.RawMaterial? RawMaterial { get; private set; }
+
+        public Vegetable(Product.RawMaterial rawMaterial) : base(Product.RawMaterialType.Vegetable)
         {
+            RawMaterial = rawMaterial;
         }
     }
 
-    class Carrot : Vegetable 
+    partial class Meat : RawMaterial
     {
-        public override decimal Quantity { get => base.Quantity; set => base.Quantity = value; }
-        public Carrot()
-        {
+        protected Product.RawMaterial? RawMaterial { get; private set; }
 
+        public Meat(Product.RawMaterial rawMaterial) : base(Product.RawMaterialType.Meat)
+        {
+            RawMaterial = rawMaterial;
         }
     }
-    class Tomato : Vegetable { }
+
 }
