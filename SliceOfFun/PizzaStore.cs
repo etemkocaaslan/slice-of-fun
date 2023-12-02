@@ -2,63 +2,61 @@
 
 namespace SliceOfFun
 {
-    abstract class PizzaStore
+    public enum FranchiseType
     {
-        internal enum PizzaStoreType
-        {
-            SNAPizza,
-            PizzaGarden,
-            LocalStore
-        }
+        SNAPizza,
+        PizzaGarden,
+        LocalStore
+    }
 
-        internal enum Location
-        {
-            Downtown,
-            Gastown,
-            Yaletown,
-            Kitsilano,
-            WestEnd
-        }
+    public enum Location
+    {
+        Downtown,
+        Gastown,
+        Yaletown,
+        Kitsilano,
+        WestEnd
+    }
 
+    public abstract class PizzaStore
+    {
         public virtual bool IsFranchiseStore { get; private set; }
-        public virtual string? FranchiseName { get; init; }
+        public virtual FranchiseType? Franchise { get; init; }
         public virtual string? CompanyName { get; init; }
-        public virtual string? LocationName { get; init; }
+        public virtual Location? Location { get; init; }
         public virtual Owner? Owner { get; set; }
 
-        public PizzaStore(bool isFranchiseStore) => IsFranchiseStore = isFranchiseStore;
+        public PizzaStore(bool isFranchiseStore)
+        {
+            IsFranchiseStore = isFranchiseStore;
+        }
     }
 
     class FranchisePizzaStore : PizzaStore
     {
-
-        public FranchisePizzaStore(string? companyName, string? franchiseName, string? locationName, Owner? owner) : base(true)
+        public FranchisePizzaStore(string? companyName, FranchiseType? franchise, Location? location, Owner? owner) : base(true)
         {
-            LocationName = locationName;
+            Location = location;
             CompanyName = companyName;
-            FranchiseName = franchiseName;
+            Franchise = franchise;
             Owner = owner;
         }
     }
 
     class LocalPizzaStore : PizzaStore
     {
-        public override bool IsFranchiseStore => false;
-
-        public LocalPizzaStore(string? locationName, Owner owner) : base(false)
+        public LocalPizzaStore(Location? locationName, Owner owner) : base(false)
         {
-            LocationName = locationName;
+            Location = locationName;
             Owner = owner;
         }
     }
 
-    class PizzaStoreFactory
+    public class PizzaStoreFactory
     {
         private static PizzaStoreFactory? _instance;
 
         private static readonly object _lock = new object();
-
-        private PizzaStoreFactory() { }
 
         public static PizzaStoreFactory Instance
         {
@@ -69,13 +67,13 @@ namespace SliceOfFun
             }
         }
 
-        public static PizzaStore CreatePizzaStore(PizzaStoreType storeType, Location location, Owner owner)
+        public static PizzaStore CreatePizzaStore(FranchiseType franchise, Location location, Owner owner)
         {
-            return storeType switch
+            return franchise switch
             {
-                PizzaStoreType.SNAPizza => new FranchisePizzaStore("Uncle Fatih Pizza", storeType.ToString(), location.ToString(), owner),
-                PizzaStoreType.PizzaGarden => new FranchisePizzaStore("Pizza Garden", storeType.ToString(), location.ToString(), owner),
-                PizzaStoreType.LocalStore => new LocalPizzaStore(location.ToString(), owner),
+                FranchiseType.SNAPizza => new FranchisePizzaStore("Uncle Fatih Pizza", franchise, location, owner),
+                FranchiseType.PizzaGarden => new FranchisePizzaStore("Pizza Garden", franchise, location, owner),
+                FranchiseType.LocalStore => new LocalPizzaStore(location, owner),
                 _ => throw new ArgumentException("Invalid pizza store type"),
             };
         }
