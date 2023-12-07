@@ -13,6 +13,10 @@
         {
             IsEmployee = isEmployee;
         }
+        public override string ToString()
+        {
+            return Name + "-" + Age.ToString();
+        }
     }
 
     public class Employee : Person
@@ -23,7 +27,7 @@
             Age = age;
             Gender = gender;
             Nationality = nationality;
-            IsCitizen = IsCitizen;
+            IsCitizen = isCitizen;
         }
     }
 
@@ -41,7 +45,7 @@
     }
     public class Owner : Employee
     {
-        public Owner(Person person) : base(person.Name,person.Age,person.Gender, person.Nationality,person.IsCitizen)
+        public Owner(Person person) : base(person.Name, person.Age, person.Gender, person.Nationality, person.IsCitizen)
         {
 
         }
@@ -55,8 +59,13 @@
     }
     public class Client : Person
     {
-        Client() : base(false)
+        public Client(string? name, int? age, string? gender, string? nationality, bool? isCitizen) : base(false)
         {
+            Name = name;
+            Age = age;
+            Gender = gender;
+            Nationality = nationality;
+            IsCitizen = isCitizen;
         }
     }
 }

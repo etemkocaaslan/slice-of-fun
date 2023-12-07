@@ -30,10 +30,15 @@ namespace SliceOfFun
         {
             IsFranchiseStore = isFranchiseStore;
         }
+        public override string ToString()
+        {
+            return Franchise + "-" + CompanyName;
+        }
     }
 
     class FranchisePizzaStore : PizzaStore
     {
+        public Dictionary<RawMaterial, decimal> Storage { get; private set; } = new Dictionary<RawMaterial, decimal>();
         public FranchisePizzaStore(string? companyName, FranchiseType? franchise, Location? location, Owner? owner) : base(true)
         {
             Location = location;
@@ -56,7 +61,7 @@ namespace SliceOfFun
     {
         private static PizzaStoreFactory? _instance;
 
-        private static readonly object _lock = new object();
+        private static readonly object _lock = new();
 
         public static PizzaStoreFactory Instance
         {
